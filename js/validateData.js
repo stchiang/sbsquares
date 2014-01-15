@@ -3,7 +3,6 @@ function validateData (form) {
     var last_name = form.last_name.value;
 	var email = form.email.value;
     var squares = form.squares.value;
-    alert(squares);
     
     var atpos = form.email.value.indexOf("@");
     var dotpos = form.email.value.lastIndexOf(".");
