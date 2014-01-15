@@ -13,8 +13,7 @@
 
 	function goBackLink() {
 		$home_url = "index.php";
-		echo "<form action = " . $home_url
-    		. "><input type='submit' value='Back'></form>";
+		echo "<form action = " . $home_url . "><input type='submit' value='Back'></form>";
 	}
 
 	function checkForDuplicates($squaresDB, $squares_arr) {
@@ -52,64 +51,44 @@
     $squares = str_replace(' ', '', $_POST['squares']);
 	$squares_arr = array_filter(explode(',', $squares));
 
-	echo "Hi " . $first_name . " " . $last_name . " (" . $email . "), these are the squares you've entered:\n";
-	echo "<br><br>\n";
-	echo join(' ', $squares_arr);			
-	echo "\n<br><br>\n";
-
 	$valid = true;	
 
-	// Check to make sure there are no empty fields
-	// This happens if insertData.php is accessed directly 
+	
+	echo "Hi " . $first_name . " " . $last_name . " (" . $email . ")!\n";
+	echo "<br><br>\n";
+
+	// Check to make sure there are no empty fields.
+	// This happens if insertData.php is somehow accessed directly!
 	if ($first_name == "" || $last_name == "" || $email == "" || $squares == "") {
-		echo "<font color = 'red'>One or more fields in the form was left blank. Please fill out all .\n";
-		echo "</b></font><br><br>\n";
 		$valid = false;
 	}
 	
-	// Check to make sure user didn't enter more than 5 squares.
-    if (count($squares_arr) > 5) {
-		echo "<font color = 'red'>You've entered too many squares! Only 4 squares per person max.\n";
+	// Check to make sure user didn't select more than maximum number of squares.
+    if (count($squares_arr) > $max_squares) {
+		echo "<font color = 'red'>You've selected too many squares! Only " 
+		. $max_squares . " squares per person are allowed.\n";
 		echo "</b></font><br><br>\n";
 		$valid = false;
 	}
-	
-	// Check to make sure numbers are valid and within range 1-100
-	$invalid_vals = array();
-	foreach($squares_arr as $val) {
-		if (!is_numeric($val) || fmod($val, 1) || $val < 1 || $val > 100 ) {
-			array_push($invalid_vals, $val);
-		}
-	}
-	if (count($invalid_vals) > 0) {	
-		echo "<font color = 'red'>\n";
-		echo "Your square picks must be integers between 1-100.  The following picks are invalid: \n";
-		echo "<b>";
-		echo join(' ', $invalid_vals);
-		echo "</b></font><br><br>\n";
-		$valid = false;
-	} 
-	
+		
 	// Check to make sure that there are no duplicates.
+	// Duplicates happen if two users are choosing squares at the same time, so duplicate checking 
+	// should be done on server side.
 	$duplicates = checkForDuplicates($squaresDB, $squares_arr);
 	if (count($duplicates)) {
-		echo "<font color='red'>Duplicate square(s) found! The following squares are duplicates: \n";
-		echo "<b>";
-		echo join(' ', $duplicates);
-		echo "</b><br><br>\n";
-		echo "You may have chosen a square that's already taken, or entered a square more than once.\n";
+		echo "<font color='red'>Duplicate square(s) found! You have selected a square that has already been taken.\n";
 		echo "</font><br><br>\n";
 		$valid = false;
 	}	
 	
-	// Data is invalid
-	if 	($valid == false){	
+	// Something went wrong, redirect to home page. 
+	if ($valid == false) {	
 		echo "Please go back and edit your selections.\n";
 		echo "<br><br>\n";
 		goBackLink();
 	}
 		
-	// Data is valid, continue
+	// Data is valid, continue.
 	else {
 		echo "Entering your squares into the database... \n";	
 
@@ -117,7 +96,7 @@
 			. "VALUES ('" . $first_name . "', '" . $last_name ."', '" . $email . "', '"
 			. $squares . "')";
 
-		// Duplicate email found
+		// Duplicate email exists in database.
 		if (!$squaresDB->query($sql)) {
 			echo "email address <b>" . $email . "</b> exists in database!\n";
 			echo "<br><br>\n";
@@ -128,13 +107,12 @@
 			
 			echo "Player: " . "$row[first_name]" . " " . "$row[last_name]" . "\n";
 			echo "<br>\n";
-			echo "Squares: ";
-			echo join(' ', $temp);
-			echo "<br><br>\n";
+			echo "Email: " . "$row[email]" . "\n";
+			echo "<br>\n";
 
 			// Player already has max number of squares
-			if (count($temp) == 5) {
-				echo "You already have the maximum number of squares allowed"
+			if (count($temp) == $max_squares) {
+				echo "<br>You already have the maximum number of squares allowed"
 					. " per player, you can't add any more squares.\n";
 				echo "<br><br>\n";
 				goBackLink();
@@ -142,8 +120,8 @@
 
 			// Add additional squares for the player
 			else {
-				$num = 5 - count($temp);
-				echo "You can only add " . $num . " more square(s).\n";
+				$num = $max_squares - count($temp);
+				echo "Square(s) available: " . $num . "\n";
 				echo "<br><br>\n";
 
 				if (count($squares_arr) <= $num) {
@@ -154,16 +132,14 @@
 				
 					$sql = "UPDATE players SET squares='" . $temp_str . "' WHERE email='" . $email . "'";
 					$squaresDB->query($sql);
-					echo "Entering square(s) ";
-					echo join(' ', $squares_arr);
-					echo " to the database... <font color='green'>success!</font>\n";
+					echo "Entering square(s) into the database... <font color='green'>success!</font>\n";
 					echo "<br><br>\n"; 
 					echo "<h2>Thanks for playing " . "$row[first_name]" . ", and good luck!</h2>\n";
 					echo "<br>\n";
 					goBackLink();
 				}
 				else {
-					echo "<font color='red'>You've entered too many squares. Please go back and re-enter your squares.\n";
+					echo "<font color='red'> You've entered too many squares. Please go back and re-enter your squares.\n";
 					echo "</font><br><br>\n";
 					goBackLink();
 				}
