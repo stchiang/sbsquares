@@ -12,7 +12,7 @@ $hostname = "";
 $user = "";
 $password = "";
 ```
-For security reasons, it is recommended to store the config.php file outside of the web root. If this is done, then the absolute path to config.php will need to be set in getData.php (line 2) and includeData.php(11)
+For security reasons, it is recommended to store the config.php file outside of the web root. If this is done, then the absolute path to config.php will need to be set in getData.php (line 2) and includeData.php(line 11):
 ```
 include '../../../config.php';
 ```

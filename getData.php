@@ -1,6 +1,6 @@
 <?php
-    include '/config.php';
-    include '/DBConnector.class.php';
+    include 'config.php';
+    include 'DBConnector.class.php';
     
     $squaresDB = new DBConnector($link);
     $sql = "SELECT * FROM players";
