@@ -3,6 +3,7 @@ function validateData (form) {
     var last_name = form.last_name.value;
 	var email = form.email.value;
     var squares = form.squares.value;
+    alert(squares);
     
     var atpos = form.email.value.indexOf("@");
     var dotpos = form.email.value.lastIndexOf(".");
@@ -11,7 +12,7 @@ function validateData (form) {
 		last_name == "" || last_name == null ||
 		email == "" || email == null ||
 		squares == "" || squares == null) {
-            aleart ("Please fill out all required fiels in the form.");
+            alert ("Please fill out all required fields in the form.");
 			return false;
 	}
 	

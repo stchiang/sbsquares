@@ -3,6 +3,7 @@ var p = 10;
 
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext("2d");
+var mysquares = new Array();
 
 function drawGrid(){
 	var imageObj = new Image();
@@ -43,8 +44,8 @@ function fillBoxes()
             context.fillStyle = "#FF6347";
             context.fillRect(p + (60*a) + 1, p + (60*b) + 61, 59, 59); 
             context.fillStyle = "white";
-            context.fillText(first_last[0], p + (60*a) + 30, p + (60*b) + 96, 58);
-            context.fillText(first_last[1], p + (60*a) + 30, p + (60*b) + 111, 58);
+            context.fillText(first_last[0], p + (60*a) + 30, p + (60*b) + 90, 58);
+            context.fillText(first_last[1], p + (60*a) + 30, p + (60*b) + 105, 58);
         }
     }            
     context.fillStyle = "#DCDCDC";    
@@ -67,16 +68,6 @@ function placeNumbers() {
     }                
 }
 
-function labelSquares() {
-    context.font="10px Arial";	
-	context.textAlign="start";
-    var a = 63+p;
-    var b = 70+p;
-    for (var x = 0; x < 10; x++)
-        for (var y = 0; y < 10; y++)
-            context.fillText((10*y)+ x + 1, a + (60*x), b + (60*y));            
-}
-
 function drawThickBorders() {
     context.beginPath();
     context.moveTo(0.5 + 60 + p, p);
@@ -89,9 +80,59 @@ function drawThickBorders() {
     context.stroke();
 }
 
-//run functions
+function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left - 70,
+      y: evt.clientY - rect.top - 70
+    };
+}
+
+function rgbToHex(r, g, b) {
+    if (r > 255 || g > 255 || b > 255)
+        throw "Invalid color component";
+    return ((r << 16) | (g << 8) | b).toString(16);
+}
+
+// Draw the board and its corresponding elements
 drawGrid();
 fillBoxes();
-labelSquares();
 //placeNumbers();
 drawThickBorders();
+
+// Mouse listener
+canvas.addEventListener('mousemove', function(evt) {
+    var mousePos = getMousePos(canvas, evt);
+    var message = mousePos.x + ',' + mousePos.y;
+    }, false);
+
+$("#canvas").click(function(e){
+    var x = e.pageX-$("#canvas").offset().left - 70;
+    var y = e.pageY-$("#canvas").offset().top - 70;
+    if (x >= 0 && y >= 0 && x < 600 && y < 600) {
+        var a = Math.floor(x/60);
+        var b = Math.floor(y/60);
+        var p = context.getImageData((60*a) + 101, (60*b) + 81, 1, 1).data;
+        var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+        var num = a + (10*b) + 1;
+        console.log(hex);
+        console.log(num);
+        if (hex == "#ffffff") {
+            context.fillStyle = "#7ddeff";
+            context.fillRect(74 + (60*a), 74 +(60*b), 53, 53);    
+            mysquares.push(num);
+            console.log(mysquares);
+        }
+        else if (hex == "#7ddeff") {
+            context.fillStyle = "#ffffff";
+            context.fillRect(74 + (60*a), 74 +(60*b), 53, 53);
+            for (var x = 0; x < mysquares.length; x++) {
+                if (mysquares[x] == num) {
+                    mysquares.splice(x, 1);
+                    console.log(mysquares);
+                }
+            }                    
+        }        
+    }
+}
+);

@@ -3,7 +3,8 @@
     <head>
         <title>Superbowl Squares</title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/mystyle.css">		
+        <link rel="stylesheet" href="css/mystyle.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     </head>    
     <body>
         <?php include "getData.php"; ?>
@@ -45,23 +46,29 @@
                         <li>Final score gets remaining money (if any).</li> 
                         <li>Prizes are awarded until the money runs out.</li>
                     </ul>
-                    <p> Please fill out the following form with your name, email,
-                        and the number(s) of the corresponding square(s) that you 
-						would like to pick, separated by commas. (e.g. 1,2,3,4,5) 
+                    <p> 
+                        Please fill out the following form with your name and unique email address, and 
+                        select the squares you would like to pick by clicking them on the board. Press the 
+                        Submit button below once you've finished. 
 					</p>
-                    <form action="insertData.php" method="post" onSubmit="return validateData(this)">
+                    <form name="myForm" action="insertData.php" method="post" onSubmit="return validateData(this)">
                         <label>First Name:</label> <input type="text" name="first_name" value="" maxlength="10" required><br>
                         <label>Last Name:</label> <input type="text" name="last_name" value="" maxlength="15" required><br>
                         <label>E-mail:</label> <input type="email" name="email" value="" maxlength = "50" required><br>
-                        <label>Squares:</label> <input type="text" name="squares" value="" maxlength = "20" required><br>
+                        <input type="hidden" name="squares" value="">
                         <br>
-                        <label></label><input type="submit" value="Submit">
+                        <label></label><input type="submit" value="Submit" onclick="setSquaresValue()">
                     </form>
-                    <br>             
-                </td>                
-            </tr>            
+                    <br>
+                </td>
+            </tr>
         </table>
 		<script src="js/validateData.js"></script>
         <script src="js/drawBoard.js"></script>
+        <script>
+        function setSquaresValue(){
+            document.myForm.squares.value = mysquares;
+        }
+        </script>
         </body>
     </html>
