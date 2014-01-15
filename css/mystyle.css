@@ -1,0 +1,24 @@
+label{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+input {
+	display: inline-block;
+}
+
+body {
+	background-color: #F8F8F8;
+	padding-left: 10px;
+	font: 14px Arial, sans-serif;
+}
+
+table {
+	width: 1200px;
+}
+
+#rules {
+	vertical-align: top;
+	padding-top: 20px;
+	padding-left: 20px;
+}
