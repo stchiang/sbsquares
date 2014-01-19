@@ -62,17 +62,7 @@
                             <th> Squares </th>
                             <th> Cost </th>
                         </tr>
-                        <script>
-                            for (var i=0; i<player_names.length; i++) {
-                                document.write("<tr><td>");
-                                document.write(player_names[i]);
-                                document.write("</td><td style='text-align: center;'>");
-                                document.write(taken_squares[i].length);
-                                document.write("</td><td style='text-align: center;'>");
-                                document.write("$" + taken_squares[i].length * 5);
-                                document.write("</td></tr>");
-                            }
-                        </script>
+                        <script src="js/generatePlayerTable.js"> </script>
                     </table>
                 </td>
             </tr>
