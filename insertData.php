@@ -13,7 +13,7 @@
 
 	function goBackLink() {
 		$home_url = "index.php";
-		echo "<form action = " . $home_url . "><input type='submit' value='Back'></form>";
+		echo "<form action = " . $home_url . "><input id='button' type='submit' value='Back'></form>";
 	}
 
 	function checkForDuplicates($squaresDB, $squares_arr) {
@@ -53,7 +53,6 @@
 
 	$valid = true;	
 
-	
 	echo "Hi " . $first_name . " " . $last_name . " (" . $email . ")!\n";
 	echo "<br><br>\n";
 
