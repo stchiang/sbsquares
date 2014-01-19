@@ -18,7 +18,9 @@ table {
 }
 
 #rules {
+	font: 14px "Gill Sans", sans-serif;
 	vertical-align: top;
 	padding-top: 20px;
 	padding-left: 20px;
+
 }
