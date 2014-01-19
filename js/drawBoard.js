@@ -44,6 +44,12 @@ function fillBoxes()
             context.fillStyle = "#FF6347";
             context.fillRect(p + (60*a) + 1, p + (60*b) + 61, 59, 59); 
             context.fillStyle = "white";
+            if (first_last[0].length > 8) {
+                first_last[0] = first_last[0].substring(0, 8) + "..";
+            }
+            if (first_last[1].length > 8) {
+                first_last[1] = first_last[1].substring(0, 8) + "..";
+            }
             context.fillText(first_last[0], p + (60*a) + 30, p + (60*b) + 90, 58);
             context.fillText(first_last[1], p + (60*a) + 30, p + (60*b) + 105, 58);
         }
@@ -115,13 +121,10 @@ $("#canvas").click(function(e){
         var p = context.getImageData((60*a) + 101, (60*b) + 81, 1, 1).data;
         var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
         var num = a + (10*b) + 1;
-        console.log(hex);
-        console.log(num);
         if (hex == "#ffffff") {
             context.fillStyle = "#7ddeff";
             context.fillRect(74 + (60*a), 74 +(60*b), 53, 53);    
             mysquares.push(num);
-            console.log(mysquares);
         }
         else if (hex == "#7ddeff") {
             context.fillStyle = "#ffffff";
@@ -129,7 +132,6 @@ $("#canvas").click(function(e){
             for (var x = 0; x < mysquares.length; x++) {
                 if (mysquares[x] == num) {
                     mysquares.splice(x, 1);
-                    console.log(mysquares);
                 }
             }                    
         }        
