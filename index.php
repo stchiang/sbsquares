@@ -11,14 +11,25 @@
         <table id="main">
             <tr>
                 <td></td>
-                <td>
-                    <img width="680" height="80" src="images/afc.jpg">
+              <td style="text-align: center">
+                    <img width="650" src="images/broncos.jpg">
                 </td>
                 <td></td>
+                <!--
+                <td id="rules">
+                    <h2>Rules</h2>
+                    <ul>
+                        <li>Every score change (including extra points) gets $20.</li>
+                        <li>End of 1st, half, and 3rd each get $30.</li>
+                        <li>Final score gets remaining money (if any).</li> 
+                        <li>Prizes are awarded until the money runs out.</li>
+                    </ul>              
+                </td>
+                -->
             </tr>    
             <tr>
-                <td>
-                    <img height="680" width="80" src="images/nfc.jpg">
+                <td style="vertical-align: top; padding-top: 15px">
+                    <img height="650" src="images/seahawks.jpg">
                 </td>
                 <td id="board">
                     <canvas id="canvas" width="680" height="680">
@@ -29,9 +40,10 @@
                         </p>
                     </canvas>
                 </td>
-                <td id="rules">
+                <td id="rules">                    
                     <h2>Rules</h2>
                     <ul>
+
                         <li>Cost is $5 per square (limit 5 squares per player).</li>
                         <li>Numbers will be chosen randomly after all squares have been purchased.</li>
                         <li>Payoff based upon the last digit of each team's score.</li>
@@ -42,9 +54,9 @@
                         <li>Prizes are awarded until the money runs out.</li>
                     </ul>
                     <p> 
-                        Please fill out the following form with your name and unique email address, and 
-                        select the squares you would like to pick by clicking them on the board. Press the 
-                        Submit button below once you've finished. 
+                        Please fill out the following form with your first name, last name, and email address, and 
+                        select the squares you would like to pick by clicking them on the board.<br><br>
+                        Once you've finished, click the Submit button below to submit your squares. 
                     </p>
                     <form name="myForm" action="insertData.php" method="post" onSubmit="return validateData(this)">
                         <label>First Name:</label> <input type="text" name="first_name" value="" maxlength="15" required><br>
@@ -55,15 +67,19 @@
                         <label></label><input id="button" type="submit" value="Submit" onclick="setSquaresValue()">
                     </form>
                     <br>
-
+                    <!--                    
+                    <h2> Scoreboard </h2>
                     <table id="player-info">
                         <tr>
-                            <th style='text-align: left; padding-left: 0px;'> Player </th>
-                            <th> Squares </th>
-                            <th> Cost </th>
+                            <th> DEN </th>
+                            <th> SEA </th>
+                            <th> Winner </th>
+                            <th> Reason </th>
+                            <th> Amount </th>
                         </tr>
-                        <script src="js/generatePlayerTable.js"> </script>
+                        <script src="js/generateWinnersTable.js"></script>                      
                     </table>
+                    -->
                 </td>
             </tr>
         </table>
@@ -74,5 +90,5 @@
             document.myForm.squares.value = mysquares;
         }
         </script>
-        </body>
-    </html>
+    </body>
+</html>

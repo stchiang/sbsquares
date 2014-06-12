@@ -10,7 +10,7 @@
 <?php
 	include 'config.php';
 	include 'DBConnector.class.php';
-
+	
 	function goBackLink() {
 		$home_url = "index.php";
 		echo "<form action = " . $home_url . "><input id='button' type='submit' value='Back'></form>";

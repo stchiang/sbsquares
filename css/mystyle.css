@@ -30,7 +30,7 @@ ul {
 
 #main {
 	border-collapse:collapse;
-	width: 1200px;
+	width: 1250px;
 	margin: 10px 10px 10px 10px;
 }
 
@@ -40,11 +40,21 @@ ul {
 
 #player-info {
 	border-collapse:collapse;
+	border: 1px solid black;
 }
 
 #player-info th {
 	padding-left: 5px;
 	padding-right: 5px;
+	background-color: #6495ED;
+	color: #FFFAF0;
+	border-bottom: 1px solid black;
+}
+
+#player-info td {
+	padding-left: 5px;
+	padding-right: 5px;
+	text-align: center;
 }
 
 

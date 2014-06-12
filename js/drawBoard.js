@@ -6,15 +6,15 @@ var context = canvas.getContext("2d");
 var mysquares = new Array();
 
 function drawGrid(){
-	var imageObj = new Image();
+  var imageObj = new Image();
     imageObj.onload = function() {
-		context.drawImage(imageObj, 11, 11);
+    context.drawImage(imageObj, 11, 11);
      }
     imageObj.src = "images/sb.jpg";
 
     context.fillStyle = "#FFFFFF";
     context.fillRect(10, 10, 660, 660);
-	
+  
     context.beginPath();
     for (var x = 0; x <= len; x += 60) {
         context.moveTo(0.5 + x + p, p);
@@ -30,11 +30,11 @@ function drawGrid(){
 function fillBoxes()
 {    
     context.font = "11px Arial";
-	context.textAlign="center";
+    context.textAlign="center";
     for (var i = 0; i < taken_squares.length; i++) {
         var first_last = player_names[i].split(' ');
         var temp_arr = taken_squares[i];
-        for (j = 0; j < temp_arr.length; j++) {
+        for (var j = 0; j < temp_arr.length; j++) {
             var a = temp_arr[j]%10;        
             var b = Math.floor((temp_arr[j]/10));
             if (a === 0) {
@@ -44,6 +44,18 @@ function fillBoxes()
             context.fillStyle = "#FF6347";
             context.fillRect(p + (60*a) + 1, p + (60*b) + 61, 59, 59); 
             context.fillStyle = "white";
+            /*
+             * HIGHLIGHT SQUARE WINNERS
+             * UNCOMMENT FOR COMPLETED SQUARE
+             *
+            var k = winning_squares.indexOf(temp_arr[j]);
+            context.fillStyle = "white";
+            if (k >= 0) {
+                context.fillStyle = "lightgreen";
+            }
+            context.fillRect(p + (60*a) + 1, p + (60*b) + 61, 59, 59); 
+            context.fillStyle = "black";
+            */
             if (first_last[0].length > 8) {
                 first_last[0] = first_last[0].substring(0, 8) + "..";
             }
@@ -63,14 +75,14 @@ function fillBoxes()
 }
 
 function placeNumbers() {
-    var arr1 = [0,1,2,3,4,5,6,7,8,9];
-    var arr2 = [0,1,2,3,4,5,6,7,8,9];
+    var arr1 = ["?","?","?","?","?","?","?","?","?","?"];
+    var arr2 = ["?","?","?","?","?","?","?","?","?","?"];
     context.font="30px Arial";
-    var a = 23+p;
-    var b = 40+p;
-    for (var x = 0; x < 10; x++) {        
-        context.fillText(arr1[x], a, b + 60 + (60*x));
-        context.fillText(arr2[x], a + 60 + (60*x), b);                    
+    context.textAlign="center";
+    context.textBaseline="middle"; 
+    for (var x = 0; x < 10; x++) {      
+        context.fillText(arr1[x], 40, 100 + (60*x));
+        context.fillText(arr2[x], 100 + (60*x), 40);
     }                
 }
 
@@ -103,8 +115,10 @@ function rgbToHex(r, g, b) {
 // Draw the board and its corresponding elements
 drawGrid();
 fillBoxes();
-//placeNumbers();
+placeNumbers();
 drawThickBorders();
+
+
 
 // Mouse listener
 canvas.addEventListener('mousemove', function(evt) {
