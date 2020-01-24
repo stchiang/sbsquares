@@ -4,7 +4,7 @@
         <title>Superbowl Squares</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/mystyle.css">
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     </head>    
     <body>
         <?php include "getData.php"; ?>
